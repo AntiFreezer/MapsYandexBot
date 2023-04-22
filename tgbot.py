@@ -257,22 +257,22 @@ async def location(update, context):
 async def info_about_sight(update, context):
     sight = update.message.text.replace('/info_about_sight', '')
     if get_coords(sight.strip()):
-        #try:
-        await bot.send_chat_action(chat_id=update.message.chat_id, action='typing')
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt='Расскажи о географическом объекте "' + sight + '"',
-            temperature=0.9,
-            max_tokens=4000,
-            top_p=1.0,
-            frequency_penalty=0.0,
-            presence_penalty=0.6,
-            stop=[" Human:", " AI:"]
-        )
-        await update.message.reply_text('Формирую описание георгафического объекта "' + sight + '"')
-        await update.message.reply_text(response['choices'][0]['text'])
-        #except:
-            #await update.message.reply_text('Произошла непредвиденная ошибка')
+        try:
+            await bot.send_chat_action(chat_id=update.message.chat_id, action='typing')
+            response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt='Расскажи о географическом объекте "' + sight + '"',
+                temperature=0.9,
+                max_tokens=4000,
+                top_p=1.0,
+                frequency_penalty=0.0,
+                presence_penalty=0.6,
+                stop=[" Human:", " AI:"]
+            )
+            await update.message.reply_text('Формирую описание георгафического объекта "' + sight + '"')
+            await update.message.reply_text(response['choices'][0]['text'])
+        except:
+            await update.message.reply_text('Произошла непредвиденная ошибка')
     else:
         await update.message.reply_text('Не удалось найти такого георгафического объекта')
 
